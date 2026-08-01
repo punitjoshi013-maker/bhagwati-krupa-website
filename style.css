@@ -1,0 +1,662 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', Arial, sans-serif;
+}
+
+/* HEADER */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 60px;
+  background-color: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  position: relative;
+  z-index: 10;
+}
+
+.logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 26px;
+  font-weight: 700;
+  color: #222;
+}
+
+nav a {
+  margin-right: 25px;
+  text-decoration: none;
+  color: #444;
+  font-weight: 500;
+}
+
+nav a:hover {
+  color: #e6a817;
+}
+
+.btn {
+  padding: 8px 20px;
+  background-color: #ffcc33;
+  border: none;
+  border-radius: 20px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* HERO IMAGE */
+.hero-image {
+  width: 100%;
+  line-height: 0;
+}
+
+.hero-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* HERO TEXT */
+.hero-text-section {
+  text-align: center;
+  padding: 50px 30px;
+  background-color: #fdf3e3;
+}
+
+.hero-text-section h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 38px;
+  color: #3a2a1a;
+  margin-bottom: 15px;
+}
+
+.hero-text-section p {
+  font-size: 17px;
+  color: #5a4a3a;
+  margin-bottom: 25px;
+}
+
+.btn-primary {
+  padding: 14px 32px;
+  background-color: #3a2a1a;
+  color: #fff;
+  border: none;
+  border-radius: 25px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+}
+
+.btn-primary:hover {
+  background-color: #55402a;
+}
+
+/* SERVICES */
+.services {
+  padding: 60px;
+  text-align: center;
+}
+
+.services h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 34px;
+  font-weight: 700;
+  margin-bottom: 40px;
+  color: #3a2a1a;
+  position: relative;
+  display: inline-block;
+}
+
+.services h2::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 3px;
+  background-color: #e6a817;
+  margin: 12px auto 0;
+}
+
+.cards {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.card {
+  background-color: #fdf3e3;
+  border-radius: 15px;
+  overflow: hidden;
+  width: 280px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  transition: transform 0.2s;
+  cursor: pointer;
+  text-align: left;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+}
+
+.card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.card h3 {
+  margin: 15px 15px 8px;
+  color: #3a2a1a;
+}
+
+.card p {
+  margin: 0 15px 15px;
+  color: #555;
+  font-size: 14px;
+}
+
+.card-btn {
+  display: block;
+  width: calc(100% - 30px);
+  margin: 0 15px 20px;
+  padding: 10px;
+  background-color: #3a2a1a;
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.card-btn:hover {
+  background-color: #e6a817;
+}
+
+/* ABOUT */
+.about {
+  background-color: #fdf3e3;
+  padding: 60px;
+  text-align: center;
+}
+
+.about-content {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.about h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 32px;
+  color: #3a2a1a;
+  margin-bottom: 20px;
+}
+
+.about p {
+  font-size: 16px;
+  line-height: 1.7;
+  color: #5a4a3a;
+}
+
+/* CONTACT */
+.contact {
+  padding: 60px;
+  text-align: center;
+}
+
+.contact h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 32px;
+  color: #3a2a1a;
+  margin-bottom: 30px;
+}
+
+.contact-form {
+  max-width: 400px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.contact-form input,
+.contact-form select {
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 15px;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* FOOTER */
+footer {
+  background-color: #3a2a1a;
+  color: #fff;
+  padding: 40px 60px;
+  text-align: center;
+}
+
+.footer-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.footer-links {
+  margin: 15px 0;
+}
+
+.footer-links a {
+  color: #fff;
+  text-decoration: none;
+  margin: 0 12px;
+  font-size: 14px;
+}
+
+.footer-links a:hover {
+  color: #e6a817;
+}
+
+.footer-copy {
+  font-size: 13px;
+  opacity: 0.7;
+  margin-top: 10px;
+}
+
+/* MODAL OVERLAY */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+  z-index: 100;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.modal-box {
+  background: #fff;
+  border-radius: 15px;
+  max-width: 800px;
+  width: 100%;
+  max-height: 85vh;
+  overflow-y: auto;
+  position: relative;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.modal-close {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: #f0f0f0;
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-size: 16px;
+  cursor: pointer;
+  z-index: 5;
+}
+
+.modal-close:hover {
+  background: #e6a817;
+  color: #fff;
+}
+
+.modal-box h2 {
+  font-family: 'Playfair Display', serif;
+  color: #3a2a1a;
+  margin-bottom: 15px;
+  font-size: 22px;
+}
+
+.modal-img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+@media (max-width: 650px) {
+  .modal-box {
+    flex-direction: column;
+  }
+  .modal-left {
+    border-right: none;
+    border-bottom: 1px solid #eee;
+  }
+}
+
+/* MODAL LAYOUT */
+.modal-left {
+  flex: 1.1;
+  min-width: 320px;
+  padding: 28px;
+  background: linear-gradient(180deg, #fdf9f2, #fff);
+  border-right: 1px dashed #e6a817;
+}
+
+.modal-right {
+  flex: 1;
+  min-width: 280px;
+  padding: 28px;
+  background-color: #fff;
+}
+
+.step-label {
+  font-weight: 700;
+  color: #3a2a1a;
+  margin: 18px 0 10px;
+  font-size: 13px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+/* CHIP SELECTOR */
+.chip-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.chip {
+  padding: 8px 14px;
+  border: 1.5px solid #e0d5c0;
+  border-radius: 20px;
+  font-size: 13px;
+  color: #5a4a3a;
+  cursor: pointer;
+  transition: all 0.15s;
+  background: #fff;
+}
+
+.chip:hover {
+  border-color: #e6a817;
+}
+
+.chip-active {
+  background-color: #3a2a1a;
+  border-color: #3a2a1a;
+  color: #fff;
+  font-weight: 600;
+}
+
+/* TOGGLE SWITCH */
+.toggle-switch {
+  display: inline-flex;
+  background-color: #f0e8d8;
+  border-radius: 25px;
+  padding: 4px;
+  margin-bottom: 10px;
+}
+
+.toggle-btn {
+  border: none;
+  background: transparent;
+  padding: 8px 22px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #5a4a3a;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.toggle-active {
+  background-color: #e6a817;
+  color: #fff;
+}
+
+/* SUMMARY CARD */
+.summary-card {
+  background: linear-gradient(135deg, #3a2a1a, #4a3625);
+  color: #fff;
+  border-radius: 14px;
+  padding: 20px;
+  margin-bottom: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.summary-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 17px;
+  margin-bottom: 14px;
+  opacity: 0.95;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  padding: 6px 0;
+  opacity: 0.85;
+}
+
+.summary-divider {
+  border-top: 1px dashed rgba(255,255,255,0.25);
+  margin: 8px 0;
+}
+
+.summary-price {
+  font-size: 18px;
+  opacity: 1;
+}
+
+.summary-price strong {
+  color: #ffcc33;
+}
+
+.summary-note {
+  font-size: 12.5px;
+  opacity: 0.85;
+  line-height: 1.5;
+}
+
+.pooja-note {
+  font-style: italic;
+  color: #e6a817;
+  font-weight: 600;
+  margin-bottom: 10px;
+  font-size: 13px;
+}
+
+.booking-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.booking-form input {
+  padding: 11px 14px;
+  border: 1.5px solid #e0d5c0;
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.booking-form input:focus {
+  outline: none;
+  border-color: #e6a817;
+}
+
+.modal-hint {
+  font-size: 11.5px;
+  color: #999;
+  text-align: center;
+  margin-top: 10px;
+  line-height: 1.5;
+}
+/* PAYMENT / QR SECTION */
+.qr-box {
+  text-align: center;
+  background-color: #fdf3e3;
+  border-radius: 12px;
+  padding: 15px;
+  margin-bottom: 12px;
+}
+
+.qr-img {
+  width: 150px;
+  height: 150px;
+  border-radius: 8px;
+  background: #fff;
+  padding: 8px;
+}
+
+.upi-id {
+  font-size: 12px;
+  color: #5a4a3a;
+  margin-top: 8px;
+  font-weight: 600;
+}
+
+.paid-check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #3a2a1a;
+  margin-bottom: 15px;
+  cursor: pointer;
+}
+
+.paid-check input {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+#bookBtn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+/* MOBILE RESPONSIVE */
+@media (max-width: 768px) {
+
+  header {
+    padding: 15px 20px;
+  }
+
+  .logo {
+    font-size: 20px;
+  }
+
+  .hero-text-section {
+    padding: 35px 20px;
+  }
+
+  .hero-text-section h1 {
+    font-size: 26px;
+  }
+
+  .hero-text-section p {
+    font-size: 15px;
+  }
+
+  .services {
+    padding: 40px 20px;
+  }
+
+  .services h2 {
+    font-size: 26px;
+  }
+
+  .cards {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .card {
+    width: 100%;
+    max-width: 340px;
+  }
+
+  .about {
+    padding: 40px 20px;
+  }
+
+  .about h2 {
+    font-size: 26px;
+  }
+
+  .about p {
+    font-size: 15px;
+  }
+
+  footer {
+    padding: 30px 20px;
+  }
+
+  .modal-box {
+    max-width: 95%;
+    max-height: 90vh;
+  }
+
+  .modal-left,
+  .modal-right {
+    min-width: 100%;
+    padding: 20px;
+  }
+
+  .modal-box h2 {
+    font-size: 18px;
+  }
+
+  .chip {
+    font-size: 12px;
+    padding: 7px 12px;
+  }
+
+  .toggle-btn {
+    padding: 7px 16px;
+    font-size: 12px;
+  }
+}
+/* LEGAL PAGES */
+.legal-page {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 60px 30px;
+}
+
+.legal-page h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 32px;
+  color: #3a2a1a;
+  margin-bottom: 8px;
+}
+
+.legal-updated {
+  font-size: 13px;
+  color: #999;
+  margin-bottom: 30px;
+}
+
+.legal-page h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+  color: #3a2a1a;
+  margin: 30px 0 10px;
+}
+
+.legal-page p {
+  font-size: 15px;
+  line-height: 1.7;
+  color: #444;
+}

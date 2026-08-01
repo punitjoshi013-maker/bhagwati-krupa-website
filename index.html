@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Bhagwati Krupa Jyotish Karyalay</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <div class="logo">Bhagwati Krupa Jyotish</div>
+    <button class="btn">Sign In</button>
+  </header>
+
+  <div class="hero-image">
+    <img src="images/hindi.jpeg" alt="Bhagwati Krupa Jyotish Karyalay">
+  </div>
+
+  <section class="hero-text-section">
+    <h1>Stop Guessing.<br>Get Clarity On Your Life</h1>
+    <p>Astrology, Vastu & Kundli Consultancy — Expert Guidance Anytime.</p>
+  </section>
+
+  <section class="services">
+    <h2>Our Services</h2>
+    <div class="cards">
+
+      <div class="card" onclick="openModal('kundali')">
+        <img src="images/kundli.jpeg" alt="Janm Kundali">
+        <h3>Janm Kundali</h3>
+        <p>Get your birth chart analysed by expert astrologers.</p>
+        <button class="card-btn">View Details & Book</button>
+      </div>
+
+      <div class="card" onclick="openModal('vastu')">
+        <img src="images/Vastu.jpeg" alt="Vastu Consultancy">
+        <h3>Vastu Consultancy</h3>
+        <p>Bring positive energy into your home & office.</p>
+        <button class="card-btn">View Details & Book</button>
+      </div>
+
+      <div class="card" onclick="openModal('horoscope')">
+        <img src="images/hero-bg.jpeg" alt="Horoscope">
+        <h3>Horoscope</h3>
+        <p>Daily, weekly & yearly predictions for all zodiac signs.</p>
+        <button class="card-btn">View Details & Book</button>
+      </div>
+
+      <div class="card" onclick="openModal('pooja')">
+        <img src="images/pooja.jpeg" alt="Pooja Services">
+        <h3>Pooja Services</h3>
+        <p>All types of poojas & rituals performed by expert pandits.</p>
+        <button class="card-btn">View Details & Book</button>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="about">
+    <div class="about-content">
+      <h2>About Us</h2>
+      <p>With years of experience in Astrology, Vastu Shastra and Pooja rituals, we help people bring clarity, peace and positivity into their lives. Our expert astrologers and pandits guide you with authentic, traditional knowledge.</p>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-content">
+      <div class="footer-logo">Bhagwati Krupa Jyotish Karyalay</div>
+      <p>Astrology, Vastu & Pooja Consultancy</p>
+      <div class="footer-links">
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="refund.html">Refund Policy</a>
+      </div>
+      <p class="footer-copy">© 2026 Bhagwati Krupa Jyotish Karyalay. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- MODAL POPUP -->
+  <div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
+    <div class="modal-box">
+      <button class="modal-close" onclick="closeModal()">X</button>
+      <div id="modalContent"></div>
+    </div>
+  </div>
+
+  <script>
+    const WHATSAPP_NUMBER = "916352611161";
+    const UPI_ID = "miteshraval1988@okhdfcbank";
+    const PAYEE_NAME = "Bhagwati Krupa Jyotish Karyalay";
+
+    const serviceData = {
+      kundali: {
+        title: "Janm Kundali",
+        img: "images/kundli.jpeg",
+        rows: [
+          ["Full Kundali Reading", "999", "1499"],
+          ["Kundali Making Only", "899", "1299"],
+          ["Marriage Matching", "1399", "1799"],
+          ["Career & Job Guidance", "1199", "1499"],
+          ["Child's Kundali", "999", "1499"]
+        ]
+      },
+      vastu: {
+        title: "Vastu Consultancy",
+        img: "images/Vastu.jpeg",
+        rows: [
+          ["Home Vastu Check", "1499", "5100"],
+          ["Office/Business Vastu Check", "1499", "5100"],
+          ["New Property Vastu", "1999", "5100"],
+          ["Online Vastu Consultation", "2100", "5100"]
+        ]
+      },
+      horoscope: {
+        title: "Horoscope",
+        img: "images/hero-bg.jpeg",
+        rows: [
+          ["Love & Relationship", "799", "1299"],
+          ["Career & Business Growth", "799", "1299"],
+          ["Health Related Concerns", "799", "1299"],
+          ["Marriage Delay/Problem", "799", "1299"],
+          ["General Life Guidance", "799", "1299"]
+        ]
+      },
+      pooja: {
+        title: "Pooja Services",
+        img: "images/pooja.jpeg",
+        note: "No fixed price — Contact for Pooja",
+        list: ["Ganesh Yag", "Vishnu Yag", "Navchandi Pooja", "Shatchandi Pooja", "Shiv Pooja", "Anushthan", "Griha Pravesh Pooja", "Satyanarayan Pooja", "Navgraha Shanti Pooja", "Custom Pooja"]
+      }
+    };
+
+    function openModal(key) {
+      const data = serviceData[key];
+
+      let leftHtml = `<img src="${data.img}" class="modal-img" alt="${data.title}">`;
+
+      if (data.rows) {
+        leftHtml += `
+        <p class="step-label">Select Service</p>
+        <div class="chip-group">`;
+        data.rows.forEach((r, i) => {
+          leftHtml += `
+            <div class="chip ${i === 0 ? "chip-active" : ""}" data-normal="${r[1]}" data-emergency="${r[2]}" data-name="${r[0]}" onclick="selectChip(this)">
+              ${r[0]}
+            </div>`;
+        });
+        leftHtml += `</div>
+
+        <p class="step-label">Select Type</p>
+        <div class="toggle-switch">
+          <button type="button" class="toggle-btn toggle-active" data-type="normal" onclick="selectType(this)">Normal</button>
+          <button type="button" class="toggle-btn" data-type="emergency" onclick="selectType(this)">Emergency</button>
+        </div>`;
+      }
+
+      if (data.note) {
+        leftHtml += `
+        <p class="step-label">Select Service</p>
+        <p class="pooja-note">${data.note}</p>
+        <div class="chip-group">`;
+        data.list.forEach((item, i) => {
+          leftHtml += `<div class="chip ${i === 0 ? "chip-active" : ""}" data-name="${item}" onclick="selectChip(this)">${item}</div>`;
+        });
+        leftHtml += `</div>`;
+      }
+
+      let paymentHtml = "";
+      if (data.rows) {
+        paymentHtml = `
+        <p class="step-label">Scan & Pay</p>
+        <div class="qr-box">
+          <img id="qrCode" class="qr-img" src="" alt="UPI QR Code">
+          <p class="upi-id">UPI ID: ${UPI_ID}</p>
+        </div>
+        <label class="paid-check">
+          <input type="checkbox" id="paidCheckbox" onchange="togglePaidState()">
+          I have completed the payment via UPI
+        </label>
+        <p class="payment-warning">Note: Please complete the actual payment before checking this box. False claims may delay your service.</p>`;
+      }
+
+      const rightHtml = `
+        <div class="summary-card">
+          <p class="summary-title">${data.title}</p>
+          <div class="summary-row">
+            <span>Service</span>
+            <strong id="summaryService">-</strong>
+          </div>
+          ${data.rows ? `
+          <div class="summary-row">
+            <span>Type</span>
+            <strong id="summaryType">Normal</strong>
+          </div>
+          <div class="summary-divider"></div>
+          <div class="summary-row summary-price">
+            <span>Amount</span>
+            <strong id="summaryPrice">-</strong>
+          </div>` : `
+          <div class="summary-divider"></div>
+          <p class="summary-note">We'll share pricing on WhatsApp based on your requirement.</p>`}
+        </div>
+
+        ${paymentHtml}
+
+        <p class="step-label">Your Details</p>
+        <form class="booking-form" onsubmit="submitBooking(event, '${data.title}')">
+          <input type="text" id="bookName" placeholder="Your Name" required>
+          <input type="tel" id="bookPhone" placeholder="Your Mobile Number" required>
+          <button type="submit" class="btn-primary" id="bookBtn" ${data.rows ? "disabled" : ""}>
+            ${data.rows ? "Complete Payment First" : "Send Enquiry via WhatsApp"}
+          </button>
+        </form>
+        <p class="modal-hint">After tapping below, WhatsApp will open with your details filled in. Please tap Send, and then attach your payment screenshot in the same chat as proof.</p>
+      `;
+
+      document.getElementById("modalContent").innerHTML = `
+        <div class="modal-left">${leftHtml}</div>
+        <div class="modal-right">${rightHtml}</div>
+      `;
+      document.getElementById("modalOverlay").style.display = "flex";
+      document.body.style.overflow = "hidden";
+
+      if (data.rows) {
+        updateSummaryFromChip(document.querySelector(".chip-active"));
+      } else {
+        document.getElementById("summaryService").innerText = data.list[0];
+      }
+    }
+
+    function selectChip(el) {
+      document.querySelectorAll(".chip").forEach(c => c.classList.remove("chip-active"));
+      el.classList.add("chip-active");
+      if (el.dataset.normal) {
+        updateSummaryFromChip(el);
+      } else {
+        document.getElementById("summaryService").innerText = el.dataset.name;
+      }
+    }
+
+    function selectType(el) {
+      document.querySelectorAll(".toggle-btn").forEach(b => b.classList.remove("toggle-active"));
+      el.classList.add("toggle-active");
+      updateSummaryFromChip(document.querySelector(".chip-active"));
+    }
+
+    function updateSummaryFromChip(chipEl) {
+      if (!chipEl) return;
+      const type = document.querySelector(".toggle-active").dataset.type;
+      const price = type === "normal" ? chipEl.dataset.normal : chipEl.dataset.emergency;
+      document.getElementById("summaryService").innerText = chipEl.dataset.name;
+      document.getElementById("summaryType").innerText = type === "normal" ? "Normal" : "Emergency";
+      document.getElementById("summaryPrice").innerText = "Rs " + price;
+      updateQRCode(price);
+      resetPaidState();
+    }
+
+    function updateQRCode(amount) {
+      const qrImg = document.getElementById("qrCode");
+      if (!qrImg) return;
+      const upiUri = `upi://pay?pa=${UPI_ID}&pn=${encodeURIComponent(PAYEE_NAME)}&am=${amount}&cu=INR`;
+      qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(upiUri)}`;
+    }
+
+    function resetPaidState() {
+      const checkbox = document.getElementById("paidCheckbox");
+      if (checkbox) checkbox.checked = false;
+      togglePaidState();
+    }
+
+    function togglePaidState() {
+      const checkbox = document.getElementById("paidCheckbox");
+      const btn = document.getElementById("bookBtn");
+      if (!checkbox || !btn) return;
+      if (checkbox.checked) {
+        btn.disabled = false;
+        btn.removeAttribute("disabled");
+        btn.innerText = "Confirm Booking";
+      } else {
+        btn.disabled = true;
+        btn.setAttribute("disabled", "disabled");
+        btn.innerText = "Complete Payment First";
+      }
+    }
+
+    function closeModal() {
+      document.getElementById("modalOverlay").style.display = "none";
+      document.body.style.overflow = "auto";
+    }
+
+    function closeModalOutside(e) {
+      if (e.target.id === "modalOverlay") closeModal();
+    }
+
+    function submitBooking(e, serviceName) {
+      e.preventDefault();
+
+      const paidCheckbox = document.getElementById("paidCheckbox");
+
+      if (paidCheckbox && !paidCheckbox.checked) {
+        alert("Please complete the payment via UPI and check the box before booking.");
+        return;
+      }
+
+      const name = document.getElementById("bookName").value;
+      const phone = document.getElementById("bookPhone").value;
+      const service = document.getElementById("summaryService").innerText;
+      const typeEl = document.getElementById("summaryType");
+      const priceEl = document.getElementById("summaryPrice");
+
+      let details = `Service: ${service}`;
+      if (typeEl && priceEl) {
+        details += `%0AType: ${typeEl.innerText}%0AAmount: ${priceEl.innerText}%0APayment Status: PAID via UPI (screenshot to follow)`;
+      }
+
+      const message = `Hello, my name is ${name}.%0APhone: ${phone}%0ACategory: ${serviceName}%0A${details}`;
+      const whatsappURL = `https://wa.me/${WHATSAPP_NUMBER}?text=${message}`;
+      window.open(whatsappURL, "_blank");
+      closeModal();
+    }
+  </script>
+
+</body>
+</html>
