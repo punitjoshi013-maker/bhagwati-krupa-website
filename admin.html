@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - Bhagwati Krupa Jyotish Karyalay</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .admin-wrap { max-width: 1100px; margin: 0 auto; padding: 40px 20px; }
+    .login-box { max-width: 320px; margin: 100px auto; text-align: center; }
+    .login-box input { width: 100%; padding: 12px 14px; margin-bottom: 12px; border: 1.5px solid #e0d5c0; border-radius: 8px; font-family: 'Poppins', sans-serif; }
+    .summary-cards { display: flex; gap: 16px; margin-bottom: 25px; flex-wrap: wrap; }
+    .summary-card-box { flex: 1; min-width: 180px; background: linear-gradient(135deg, #3a2a1a, #4a3625); color: #fff; border-radius: 12px; padding: 18px; }
+    .summary-card-box .label { font-size: 12px; opacity: 0.8; }
+    .summary-card-box .value { font-size: 24px; font-weight: 700; color: #ffcc33; margin-top: 6px; }
+    table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; }
+    th, td { padding: 10px 12px; text-align: left; font-size: 13px; border-bottom: 1px solid #eee; }
+    th { background: #fdf3e3; color: #3a2a1a; }
+    tr:hover { background: #fdf9f2; }
+    .badge { padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: 600; }
+    .badge-paid { background: #d4f4dd; color: #1a7a3c; }
+    .badge-pending { background: #fde8d4; color: #a35a1a; }
+    .table-scroll { overflow-x: auto; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">Bhagwati Krupa Jyotish - Admin</div>
+    <button class="btn" onclick="window.location.href='index.html'">Back to Website</button>
+  </header>
+
+  <div id="loginScreen" class="login-box">
+    <h2 style="font-family:'Playfair Display',serif; color:#3a2a1a; margin-bottom:20px;">Admin Login</h2>
+    <input type="password" id="adminPassword" placeholder="Enter password">
+    <button class="btn-primary" onclick="login()">Login</button>
+    <p id="loginError" style="color:#c0392b; font-size:13px; margin-top:10px;"></p>
+  </div>
+
+  <div id="adminPanel" class="admin-wrap" style="display:none;">
+    <div class="summary-cards">
+      <div class="summary-card-box">
+        <div class="label">Total Bookings</div>
+        <div class="value" id="totalBookings">0</div>
+      </div>
+      <div class="summary-card-box">
+        <div class="label">Total Paid (via Razorpay)</div>
+        <div class="value" id="totalPaid">Rs 0</div>
+      </div>
+      <div class="summary-card-box">
+        <div class="label">Pending Payment</div>
+        <div class="value" id="totalPending">0</div>
+      </div>
+    </div>
+
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Name</th>
+            <th>Phone</th>
+            <th>Category</th>
+            <th>Service</th>
+            <th>Amount</th>
+            <th>Payment</th>
+          </tr>
+        </thead>
+        <tbody id="bookingsBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    async function login() {
+      const password = document.getElementById("adminPassword").value;
+      const errorEl = document.getElementById("loginError");
+      errorEl.innerText = "";
+
+      try {
+        const res = await fetch("/.netlify/functions/get-bookings", {
+          headers: { "x-admin-password": password }
+        });
+
+        if (!res.ok) {
+          errorEl.innerText = "Wrong password. Try again.";
+          return;
+        }
+
+        const data = await res.json();
+        sessionStorage.setItem("adminPassword", password);
+        document.getElementById("loginScreen").style.display = "none";
+        document.getElementById("adminPanel").style.display = "block";
+        renderBookings(data.bookings);
+      } catch (err) {
+        errorEl.innerText = "Something went wrong. Try again.";
+      }
+    }
+
+    function renderBookings(bookings) {
+      let totalPaid = 0;
+      let pendingCount = 0;
+      const tbody = document.getElementById("bookingsBody");
+      tbody.innerHTML = "";
+
+      bookings.forEach(b => {
+        const isPaid = (b.payment_status || "").toLowerCase().includes("paid");
+        if (isPaid) {
+          const amt = parseFloat((b.amount || "0").replace(/[^\d.]/g, "")) || 0;
+          totalPaid += amt;
+        } else if ((b.payment_status || "") !== "N/A") {
+          pendingCount++;
+        }
+
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${new Date(b.submittedAt).toLocaleString("en-IN")}</td>
+          <td>${b.name || "-"}</td>
+          <td>${b.phone || "-"}</td>
+          <td>${b.category || "-"}</td>
+          <td>${b.service || "-"}</td>
+          <td>${b.amount || "-"}</td>
+          <td><span class="badge ${isPaid ? "badge-paid" : "badge-pending"}">${b.payment_status || "-"}</span></td>
+        `;
+        tbody.appendChild(row);
+      });
+
+      document.getElementById("totalBookings").innerText = bookings.length;
+      document.getElementById("totalPaid").innerText = "Rs " + totalPaid.toLocaleString("en-IN");
+      document.getElementById("totalPending").innerText = pendingCount;
+    }
+
+    window.onload = function () {
+      const saved = sessionStorage.getItem("adminPassword");
+      if (saved) {
+        document.getElementById("adminPassword").value = saved;
+        login();
+      }
+    };
+  </script>
+
+</body>
+</html>
