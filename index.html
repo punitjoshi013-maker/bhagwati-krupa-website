@@ -95,32 +95,32 @@
         title: "Janm Kundali",
         img: "images/kundli.jpeg",
         rows: [
-          ["Full Kundali Reading", "999", "1499"],
-          ["Kundali Making Only", "899", "1299"],
-          ["Marriage Matching", "1399", "1799"],
-          ["Career & Job Guidance", "1199", "1499"],
-          ["Child's Kundali", "999", "1499"]
+          ["Full Kundali Reading", "1179", "1769"],
+          ["Kundali Making Only", "1061", "1533"],
+          ["Marriage Matching", "1651", "2123"],
+          ["Career & Job Guidance", "1415", "1769"],
+          ["Child's Kundali", "1179", "1769"]
         ]
       },
       vastu: {
         title: "Vastu Consultancy",
         img: "images/Vastu.jpeg",
         rows: [
-          ["Home Vastu Check", "1499", "5100"],
-          ["Office/Business Vastu Check", "1499", "5100"],
-          ["New Property Vastu", "1999", "5100"],
-          ["Online Vastu Consultation", "2100", "5100"]
+          ["Home Vastu Check", "1769", "6018"],
+          ["Office/Business Vastu Check", "1769", "6018"],
+          ["New Property Vastu", "2359", "6018"],
+          ["Online Vastu Consultation", "2478", "6018"]
         ]
       },
       horoscope: {
         title: "Horoscope",
         img: "images/hero-bg.jpeg",
         rows: [
-          ["Love & Relationship", "799", "1299"],
-          ["Career & Business Growth", "799", "1299"],
-          ["Health Related Concerns", "799", "1299"],
-          ["Marriage Delay/Problem", "799", "1299"],
-          ["General Life Guidance", "799", "1299"]
+          ["Love & Relationship", "943", "1533"],
+          ["Career & Business Growth", "943", "1533"],
+          ["Health Related Concerns", "943", "1533"],
+          ["Marriage Delay/Problem", "943", "1533"],
+          ["General Life Guidance", "943", "1533"]
         ]
       },
       pooja: {
@@ -313,6 +313,20 @@
       if (typeEl && priceEl) {
         details += `%0AType: ${typeEl.innerText}%0AAmount: ${priceEl.innerText}%0APayment Status: PAID via UPI (screenshot to follow)`;
       }
+    // Save to Netlify Forms so it shows up in the Admin Dashboard
+  fetch("/", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: new URLSearchParams({
+      "form-name": "booking-enquiry",
+      name, phone,
+      category: serviceName,
+      service,
+      type: typeEl ? typeEl.innerText : "-",
+      amount: priceEl ? priceEl.innerText : "-",
+      payment_status: paidCheckbox ? "Paid via UPI (claimed)" : "N/A"
+    }).toString()
+  }).catch(err => console.error("Booking save failed:", err));
 
       const message = `Hello, my name is ${name}.%0APhone: ${phone}%0ACategory: ${serviceName}%0A${details}`;
       const whatsappURL = `https://wa.me/${WHATSAPP_NUMBER}?text=${message}`;
@@ -320,6 +334,16 @@
       closeModal();
     }
   </script>
-
+<form name="booking-enquiry" data-netlify="true" netlify-honeypot="bot-field" hidden>
+    <input type="text" name="name">
+    <input type="tel" name="phone">
+    <input type="text" name="category">
+    <input type="text" name="service">
+    <input type="text" name="type">
+    <input type="text" name="amount">
+    <input type="text" name="payment_status">
+    <input type="text" name="bot-field">
+  </form>
+  
 </body>
 </html>
