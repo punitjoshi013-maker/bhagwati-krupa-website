@@ -3,73 +3,250 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin - Bhagwati Krupa Jyotish Karyalay</title>
+  <title>Admin Dashboard - Bhagwati Krupa Jyotish Karyalay</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <style>
-    .admin-wrap { max-width: 1100px; margin: 0 auto; padding: 40px 20px; }
-    .login-box { max-width: 320px; margin: 100px auto; text-align: center; }
-    .login-box input { width: 100%; padding: 12px 14px; margin-bottom: 12px; border: 1.5px solid #e0d5c0; border-radius: 8px; font-family: 'Poppins', sans-serif; }
-    .summary-cards { display: flex; gap: 16px; margin-bottom: 25px; flex-wrap: wrap; }
-    .summary-card-box { flex: 1; min-width: 180px; background: linear-gradient(135deg, #3a2a1a, #4a3625); color: #fff; border-radius: 12px; padding: 18px; }
-    .summary-card-box .label { font-size: 12px; opacity: 0.8; }
-    .summary-card-box .value { font-size: 24px; font-weight: 700; color: #ffcc33; margin-top: 6px; }
-    table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; }
-    th, td { padding: 10px 12px; text-align: left; font-size: 13px; border-bottom: 1px solid #eee; }
-    th { background: #fdf3e3; color: #3a2a1a; }
-    tr:hover { background: #fdf9f2; }
-    .badge { padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: 600; }
+    body { background: #fdf3e3; min-height: 100vh; }
+
+    /* LOGIN SCREEN */
+    .admin-login-wrap {
+      min-height: calc(100vh - 74px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .login-card {
+      background: #fff;
+      max-width: 380px;
+      width: 100%;
+      border-radius: 18px;
+      padding: 40px 32px;
+      box-shadow: 0 10px 40px rgba(58,42,26,0.15);
+      text-align: center;
+    }
+    .login-icon {
+      width: 60px; height: 60px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #3a2a1a, #4a3625);
+      color: #ffcc33;
+      font-size: 26px;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 18px;
+    }
+    .login-card h2 {
+      font-family: 'Playfair Display', serif;
+      color: #3a2a1a;
+      font-size: 22px;
+      margin-bottom: 6px;
+    }
+    .login-card .sub {
+      font-size: 13px;
+      color: #9a8a75;
+      margin-bottom: 24px;
+    }
+    .login-card input {
+      width: 100%;
+      padding: 13px 16px;
+      border: 1.5px solid #e0d5c0;
+      border-radius: 10px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 14px;
+      margin-bottom: 14px;
+    }
+    .login-card input:focus { outline: none; border-color: #e6a817; }
+    .login-card .btn-primary { width: 100%; }
+    #loginError {
+      color: #c0392b;
+      font-size: 13px;
+      margin-top: 12px;
+      min-height: 16px;
+    }
+
+    /* DASHBOARD */
+    .admin-wrap {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 32px 24px 60px;
+    }
+    .admin-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 26px;
+    }
+    .admin-topbar h1 {
+      font-family: 'Playfair Display', serif;
+      color: #3a2a1a;
+      font-size: 26px;
+    }
+    .admin-topbar .sub {
+      color: #9a8a75;
+      font-size: 13px;
+    }
+    .btn-refresh {
+      padding: 10px 20px;
+      background: #fff;
+      border: 1.5px solid #e0d5c0;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #3a2a1a;
+      cursor: pointer;
+    }
+    .btn-refresh:hover { border-color: #e6a817; }
+
+    .summary-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+    .summary-card-box {
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, #3a2a1a, #4a3625);
+      color: #fff;
+      border-radius: 16px;
+      padding: 22px 22px 20px;
+    }
+    .summary-card-box::after {
+      content: '';
+      position: absolute;
+      right: -20px; top: -20px;
+      width: 90px; height: 90px;
+      border-radius: 50%;
+      background: rgba(230,168,23,0.12);
+    }
+    .summary-card-box .icon { font-size: 20px; margin-bottom: 10px; opacity: 0.9; }
+    .summary-card-box .label { font-size: 12.5px; opacity: 0.8; letter-spacing: 0.3px; }
+    .summary-card-box .value { font-size: 26px; font-weight: 700; color: #ffcc33; margin-top: 6px; }
+
+    .table-card {
+      background: #fff;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(58,42,26,0.06);
+    }
+    .table-scroll { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; min-width: 760px; }
+    th, td {
+      padding: 14px 16px;
+      text-align: left;
+      font-size: 13px;
+      white-space: nowrap;
+    }
+    th {
+      background: #fdf3e3;
+      color: #3a2a1a;
+      font-weight: 700;
+      font-size: 11.5px;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      border-bottom: 2px solid #e6a817;
+    }
+    tbody tr { border-bottom: 1px solid #f0ebe0; transition: background 0.15s; }
+    tbody tr:hover { background: #fdf9f2; }
+    tbody tr:last-child { border-bottom: none; }
+    td.name-cell { font-weight: 600; color: #3a2a1a; }
+
+    .badge {
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+      display: inline-block;
+    }
     .badge-paid { background: #d4f4dd; color: #1a7a3c; }
     .badge-pending { background: #fde8d4; color: #a35a1a; }
-    .table-scroll { overflow-x: auto; }
+    .badge-na { background: #eee; color: #888; }
+
+    .empty-state {
+      text-align: center;
+      padding: 70px 20px;
+      color: #b0a08a;
+    }
+    .empty-state .icon { font-size: 40px; margin-bottom: 14px; }
+    .empty-state p { font-size: 14px; }
+
+    @media (max-width: 640px) {
+      .admin-wrap { padding: 22px 14px 40px; }
+      .admin-topbar { flex-direction: column; align-items: flex-start; }
+      .summary-card-box .value { font-size: 22px; }
+    }
   </style>
 </head>
 <body>
 
   <header>
-    <div class="logo">Bhagwati Krupa Jyotish - Admin</div>
-    <button class="btn" onclick="window.location.href='index.html'">Back to Website</button>
+    <div class="logo">Bhagwati Krupa Jyotish · Admin</div>
+    <button class="btn" onclick="window.location.href='index.html'">← Back to Website</button>
   </header>
 
-  <div id="loginScreen" class="login-box">
-    <h2 style="font-family:'Playfair Display',serif; color:#3a2a1a; margin-bottom:20px;">Admin Login</h2>
-    <input type="password" id="adminPassword" placeholder="Enter password">
-    <button class="btn-primary" onclick="login()">Login</button>
-    <p id="loginError" style="color:#c0392b; font-size:13px; margin-top:10px;"></p>
+  <div id="loginScreen" class="admin-login-wrap">
+    <div class="login-card">
+      <div class="login-icon">🔒</div>
+      <h2>Admin Login</h2>
+      <p class="sub">Enter your password to view bookings &amp; payments</p>
+      <input type="password" id="adminPassword" placeholder="Enter password" onkeydown="if(event.key==='Enter') login()">
+      <button class="btn-primary" onclick="login()">Login</button>
+      <p id="loginError"></p>
+    </div>
   </div>
 
   <div id="adminPanel" class="admin-wrap" style="display:none;">
+    <div class="admin-topbar">
+      <div>
+        <h1>Bookings Dashboard</h1>
+        <p class="sub">Everything customers have booked, in one place</p>
+      </div>
+      <button class="btn-refresh" onclick="reloadBookings()">↻ Refresh</button>
+    </div>
+
     <div class="summary-cards">
       <div class="summary-card-box">
+        <div class="icon">📋</div>
         <div class="label">Total Bookings</div>
         <div class="value" id="totalBookings">0</div>
       </div>
       <div class="summary-card-box">
-        <div class="label">Total Paid (via Razorpay)</div>
+        <div class="icon">💰</div>
+        <div class="label">Total Paid</div>
         <div class="value" id="totalPaid">Rs 0</div>
       </div>
       <div class="summary-card-box">
+        <div class="icon">⏳</div>
         <div class="label">Pending Payment</div>
         <div class="value" id="totalPending">0</div>
       </div>
     </div>
 
-    <div class="table-scroll">
-      <table>
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Name</th>
-            <th>Phone</th>
-            <th>Category</th>
-            <th>Service</th>
-            <th>Amount</th>
-            <th>Payment</th>
-          </tr>
-        </thead>
-        <tbody id="bookingsBody"></tbody>
-      </table>
+    <div class="table-card">
+      <div class="table-scroll">
+        <table id="bookingsTable">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Name</th>
+              <th>Phone</th>
+              <th>Category</th>
+              <th>Service</th>
+              <th>Amount</th>
+              <th>Payment</th>
+            </tr>
+          </thead>
+          <tbody id="bookingsBody"></tbody>
+        </table>
+      </div>
+      <div id="emptyState" class="empty-state" style="display:none;">
+        <div class="icon">🗓️</div>
+        <p>No bookings yet — new appointments will appear here automatically.</p>
+      </div>
     </div>
   </div>
 
@@ -85,7 +262,7 @@
         });
 
         if (!res.ok) {
-          errorEl.innerText = "Wrong password. Try again.";
+          errorEl.innerText = "Wrong password. Please try again.";
           return;
         }
 
@@ -95,7 +272,21 @@
         document.getElementById("adminPanel").style.display = "block";
         renderBookings(data.bookings);
       } catch (err) {
-        errorEl.innerText = "Something went wrong. Try again.";
+        errorEl.innerText = "Something went wrong. Please try again.";
+      }
+    }
+
+    async function reloadBookings() {
+      const password = sessionStorage.getItem("adminPassword");
+      if (!password) return;
+      try {
+        const res = await fetch("/.netlify/functions/get-bookings", {
+          headers: { "x-admin-password": password }
+        });
+        const data = await res.json();
+        renderBookings(data.bookings);
+      } catch (err) {
+        console.error("Refresh failed:", err);
       }
     }
 
@@ -103,31 +294,46 @@
       let totalPaid = 0;
       let pendingCount = 0;
       const tbody = document.getElementById("bookingsBody");
+      const emptyState = document.getElementById("emptyState");
+      const tableWrap = document.querySelector(".table-scroll");
       tbody.innerHTML = "";
 
-      bookings.forEach(b => {
-        const isPaid = (b.payment_status || "").toLowerCase().includes("paid");
+      if (!bookings || bookings.length === 0) {
+        tableWrap.style.display = "none";
+        emptyState.style.display = "block";
+      } else {
+        tableWrap.style.display = "block";
+        emptyState.style.display = "none";
+      }
+
+      (bookings || []).forEach(b => {
+        const status = (b.payment_status || "").toLowerCase();
+        const isPaid = status.includes("paid");
+        const isNA = status === "n/a" || status === "";
+
         if (isPaid) {
           const amt = parseFloat((b.amount || "0").replace(/[^\d.]/g, "")) || 0;
           totalPaid += amt;
-        } else if ((b.payment_status || "") !== "N/A") {
+        } else if (!isNA) {
           pendingCount++;
         }
 
+        const badgeClass = isPaid ? "badge-paid" : (isNA ? "badge-na" : "badge-pending");
+
         const row = document.createElement("tr");
         row.innerHTML = `
-          <td>${new Date(b.submittedAt).toLocaleString("en-IN")}</td>
-          <td>${b.name || "-"}</td>
+          <td>${b.submittedAt ? new Date(b.submittedAt).toLocaleString("en-IN", { day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit" }) : "-"}</td>
+          <td class="name-cell">${b.name || "-"}</td>
           <td>${b.phone || "-"}</td>
           <td>${b.category || "-"}</td>
           <td>${b.service || "-"}</td>
           <td>${b.amount || "-"}</td>
-          <td><span class="badge ${isPaid ? "badge-paid" : "badge-pending"}">${b.payment_status || "-"}</span></td>
+          <td><span class="badge ${badgeClass}">${b.payment_status || "-"}</span></td>
         `;
         tbody.appendChild(row);
       });
 
-      document.getElementById("totalBookings").innerText = bookings.length;
+      document.getElementById("totalBookings").innerText = (bookings || []).length;
       document.getElementById("totalPaid").innerText = "Rs " + totalPaid.toLocaleString("en-IN");
       document.getElementById("totalPending").innerText = pendingCount;
     }
